@@ -1,0 +1,4 @@
+build/
+
+# Node-generated files
+node_modules/
