@@ -117,7 +117,8 @@ export class ProductService {
 		const queryString = params.toString();
 		const endpoint = queryString ? `/products?${queryString}` : "/products";
 
-		return await this.apiCall<PaginatedProductsResponse>(endpoint);
+		const result = await this.apiCall<PaginatedProductsResponse>(endpoint);
+		return result.data;
 	}
 
 	async getProductById(id: string): Promise<Product> {
