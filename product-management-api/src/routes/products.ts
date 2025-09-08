@@ -34,7 +34,6 @@ export async function productRoutes(fastify: FastifyInstance) {
 								properties: {
 									id: { type: "string" },
 									name: { type: "string" },
-									description: { type: "string" },
 									price: { type: "number" },
 									sku: { type: "string" },
 									stockQuantity: { type: "integer" },
@@ -81,7 +80,6 @@ export async function productRoutes(fastify: FastifyInstance) {
 							properties: {
 								id: { type: "string" },
 								name: { type: "string" },
-								description: { type: "string" },
 								price: { type: "number" },
 								sku: { type: "string" },
 								stockQuantity: { type: "integer" },
@@ -110,10 +108,9 @@ export async function productRoutes(fastify: FastifyInstance) {
 			tags: ["products"],
 			body: {
 				type: "object",
-				required: ["name", "description", "price", "sku"],
+				required: ["name", "price", "sku"],
 				properties: {
 					name: { type: "string", minLength: 1, maxLength: 255 },
-					description: { type: "string", minLength: 1 },
 					price: { type: "number", minimum: 0 },
 					sku: { type: "string", minLength: 1, maxLength: 100 },
 					stockQuantity: { type: "integer", minimum: 0, default: 0 },
@@ -129,7 +126,6 @@ export async function productRoutes(fastify: FastifyInstance) {
 							properties: {
 								id: { type: "string" },
 								name: { type: "string" },
-								description: { type: "string" },
 								price: { type: "number" },
 								sku: { type: "string" },
 								stockQuantity: { type: "integer" },
@@ -175,7 +171,6 @@ export async function productRoutes(fastify: FastifyInstance) {
 				type: "object",
 				properties: {
 					name: { type: "string", minLength: 1, maxLength: 255 },
-					description: { type: "string", minLength: 1 },
 					price: { type: "number", minimum: 0 },
 					sku: { type: "string", minLength: 1, maxLength: 100 },
 					stockQuantity: { type: "integer", minimum: 0 },
@@ -191,7 +186,6 @@ export async function productRoutes(fastify: FastifyInstance) {
 							properties: {
 								id: { type: "string" },
 								name: { type: "string" },
-								description: { type: "string" },
 								price: { type: "number" },
 								sku: { type: "string" },
 								stockQuantity: { type: "integer" },
@@ -275,7 +269,6 @@ export async function productRoutes(fastify: FastifyInstance) {
 							properties: {
 								id: { type: "string" },
 								name: { type: "string" },
-								description: { type: "string" },
 								price: { type: "number" },
 								sku: { type: "string" },
 								stockQuantity: { type: "integer" },

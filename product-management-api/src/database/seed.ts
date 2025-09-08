@@ -6,8 +6,6 @@ const sampleProducts = [
 	{
 		id: uuidv4(),
 		name: "Wireless Bluetooth Headphones",
-		description:
-			"High-quality wireless headphones with noise cancellation and 30-hour battery life",
 		price: 99.99,
 		sku: "WBH-001",
 		stockQuantity: 50,
@@ -17,7 +15,6 @@ const sampleProducts = [
 	{
 		id: uuidv4(),
 		name: "Smartphone Stand",
-		description: "Adjustable aluminum smartphone stand for desk and table use",
 		price: 24.99,
 		sku: "SMS-002",
 		stockQuantity: 100,
@@ -27,7 +24,6 @@ const sampleProducts = [
 	{
 		id: uuidv4(),
 		name: "USB-C Charging Cable",
-		description: "6ft USB-C to USB-A charging cable with fast charging support",
 		price: 12.99,
 		sku: "UCC-003",
 		stockQuantity: 200,
@@ -37,8 +33,6 @@ const sampleProducts = [
 	{
 		id: uuidv4(),
 		name: "Wireless Mouse",
-		description:
-			"Ergonomic wireless mouse with precision tracking and long battery life",
 		price: 39.99,
 		sku: "WM-004",
 		stockQuantity: 75,
@@ -48,8 +42,6 @@ const sampleProducts = [
 	{
 		id: uuidv4(),
 		name: "Portable Power Bank",
-		description:
-			"10000mAh portable power bank with fast charging and LED indicator",
 		price: 29.99,
 		sku: "PPB-005",
 		stockQuantity: 30,

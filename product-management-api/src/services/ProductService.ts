@@ -90,7 +90,6 @@ export class ProductService {
 			.get();
 
 		const total = totalResult?.count || 0;
-
 		// Get paginated results
 		const productList = await db
 			.select()
@@ -151,7 +150,6 @@ export class ProductService {
 	}
 
 	async deleteProduct(id: string): Promise<boolean> {
-		// Check if product exists
 		const existingProduct = await this.getProductById(id);
 		if (!existingProduct) {
 			throw new Error(`Product with ID '${id}' not found`);

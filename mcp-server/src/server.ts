@@ -25,7 +25,6 @@ const createServer = () => {
 			description: "Create a new product in the inventory",
 			inputSchema: {
 				name: z.string().describe("Product name"),
-				description: z.string().describe("Product description"),
 				price: z.number().min(0).describe("Product price"),
 				sku: z.string().describe("Product SKU (unique identifier)"),
 				stockQuantity: z
@@ -36,11 +35,10 @@ const createServer = () => {
 					.describe("Initial stock quantity (default: 0)"),
 			},
 		},
-		async ({ name, description, price, sku, stockQuantity = 0 }) => {
+		async ({ name, price, sku, stockQuantity = 0 }) => {
 			try {
 				const product = await productService.createProduct({
 					name,
-					description,
 					price,
 					sku,
 					stockQuantity,
@@ -146,7 +144,7 @@ const createServer = () => {
 				const productList = result.data
 					.map(
 						(product) =>
-							`• **${product.name}** (${product.sku})\n  Price: $${product.price} | Stock: ${product.stockQuantity}\n  ${product.description}`,
+							`• ID: ${product.id} - **${product.name}** - SKU: (${product.sku})\n  Price: $${product.price} | Stock: ${product.stockQuantity}`,
 					)
 					.join("\n\n");
 
@@ -193,7 +191,7 @@ const createServer = () => {
 					content: [
 						{
 							type: "text",
-							text: `📦 **Product Details:**\n\n**ID:** ${product.id}\n**Name:** ${product.name}\n**SKU:** ${product.sku}\n**Description:** ${product.description}\n**Price:** $${product.price}\n**Stock:** ${product.stockQuantity}\n**Created:** ${new Date(product.createdAt).toLocaleString()}\n**Updated:** ${new Date(product.updatedAt).toLocaleString()}`,
+							text: `📦 **Product Details:**\n\n**ID:** ${product.id}\n**Name:** ${product.name}\n**SKU:** ${product.sku}\n**Price:** $${product.price}\n**Stock:** ${product.stockQuantity}\n**Created:** ${new Date(product.createdAt).toLocaleString()}\n**Updated:** ${new Date(product.updatedAt).toLocaleString()}`,
 						},
 					],
 				};
@@ -219,7 +217,6 @@ const createServer = () => {
 			inputSchema: {
 				id: z.string().describe("Product ID (UUID)"),
 				name: z.string().optional().describe("New product name"),
-				description: z.string().optional().describe("New product description"),
 				price: z.number().min(0).optional().describe("New product price"),
 				sku: z.string().optional().describe("New product SKU"),
 				stockQuantity: z
@@ -230,11 +227,10 @@ const createServer = () => {
 					.describe("New stock quantity"),
 			},
 		},
-		async ({ id, name, description, price, sku, stockQuantity }) => {
+		async ({ id, name, price, sku, stockQuantity }) => {
 			try {
 				const updates = {
 					name,
-					description,
 					price,
 					sku,
 					stockQuantity,
@@ -262,7 +258,7 @@ const createServer = () => {
 					content: [
 						{
 							type: "text",
-							text: `✅ Product updated successfully!\n\n**Updated Product:**\n**ID:** ${product.id}\n**Name:** ${product.name}\n**SKU:** ${product.sku}\n**Price:** $${product.price}\n**Stock:** ${product.stockQuantity}\n**Description:** ${product.description}`,
+							text: `✅ Product updated successfully!\n\n**Updated Product:**\n**ID:** ${product.id}\n**Name:** ${product.name}\n**SKU:** ${product.sku}\n**Price:** $${product.price}\n**Stock:** ${product.stockQuantity}`,
 						},
 					],
 				};
@@ -314,48 +310,7 @@ const createServer = () => {
 		},
 	);
 
-	// Update Stock Tool
-	server.registerTool(
-		"update_product_stock",
-		{
-			title: "Update Product Stock",
-			description: "Add or subtract stock quantity for a product",
-			inputSchema: {
-				id: z.string().describe("Product ID (UUID)"),
-				quantity: z
-					.number()
-					.int()
-					.describe("Quantity to add (positive) or subtract (negative)"),
-			},
-		},
-		async ({ id, quantity }) => {
-			try {
-				const product = await productService.updateProductStock(id, quantity);
-
-				const action = quantity > 0 ? "added to" : "removed from";
-				const absQuantity = Math.abs(quantity);
-
-				return {
-					content: [
-						{
-							type: "text",
-							text: `✅ Stock updated successfully!\n\n${absQuantity} units ${action} inventory.\n\n**Updated Product:**\n**Name:** ${product.name}\n**SKU:** ${product.sku}\n**Current Stock:** ${product.stockQuantity}`,
-						},
-					],
-				};
-			} catch (error) {
-				return {
-					content: [
-						{
-							type: "text",
-							text: `❌ Error updating stock: ${error instanceof Error ? error.message : "Unknown error"}`,
-						},
-					],
-				};
-			}
-		},
-	);
-    return server;
+	return server;
 };
 
 export const getServer = () => createServer();

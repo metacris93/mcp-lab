@@ -4,7 +4,6 @@ import type { products } from "../database/schema.js";
 // Zod schemas for validation
 export const createProductSchema = z.object({
 	name: z.string().min(1, "Name is required").max(255, "Name too long"),
-	description: z.string().min(1, "Description is required"),
 	price: z.number().min(0, "Price must be positive"),
 	sku: z.string().min(1, "SKU is required").max(100, "SKU too long"),
 	stockQuantity: z

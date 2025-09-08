@@ -1,7 +1,6 @@
 export interface Product {
 	id: string;
 	name: string;
-	description: string;
 	price: number;
 	sku: string;
 	stockQuantity: number;
@@ -11,7 +10,6 @@ export interface Product {
 
 export interface CreateProductRequest {
 	name: string;
-	description: string;
 	price: number;
 	sku: string;
 	stockQuantity?: number;
@@ -19,7 +17,6 @@ export interface CreateProductRequest {
 
 export interface UpdateProductRequest {
 	name?: string;
-	description?: string;
 	price?: number;
 	sku?: string;
 	stockQuantity?: number;
@@ -36,20 +33,20 @@ export interface GetProductsFilters {
 	offset?: number;
 }
 
-export interface PaginatedProductsResponse {
+export type PaginatedProductsResponse = Omit<
+	ApiResponse<Product[]>,
+	"error" | "message"
+>;
+
+export interface ApiResponse<T> {
 	success: boolean;
-	data: Product[];
-	pagination: {
+	data: T;
+	pagination?: {
 		total: number;
 		limit: number;
 		offset: number;
 		hasMore: boolean;
 	};
-}
-
-export interface ApiResponse<T> {
-	success: boolean;
-	data: T;
 	message?: string;
 	error?: string;
 }
@@ -57,7 +54,7 @@ export interface ApiResponse<T> {
 export class ProductService {
 	private apiBaseUrl: string;
 
-	constructor(apiBaseUrl: string = "http://localhost:3001/api") {
+	constructor(apiBaseUrl: string) {
 		this.apiBaseUrl = apiBaseUrl;
 	}
 
@@ -117,8 +114,8 @@ export class ProductService {
 		const queryString = params.toString();
 		const endpoint = queryString ? `/products?${queryString}` : "/products";
 
-		const result = await this.apiCall<PaginatedProductsResponse>(endpoint);
-		return result.data;
+		const result = await this.apiCall<Product[]>(endpoint);
+		return result as PaginatedProductsResponse;
 	}
 
 	async getProductById(id: string): Promise<Product> {
